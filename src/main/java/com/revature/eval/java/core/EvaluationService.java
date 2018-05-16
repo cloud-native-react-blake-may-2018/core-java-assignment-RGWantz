@@ -31,6 +31,10 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
+		//Find uppercase chars in the String and save them to an array
+		//But will all phrases entered have all words capitalized?
+		//So save the first char and any after a space: 
+		//for i < myString.length, if myString[i] is a space (look up in documentation) then save myString[i+1]  
 		return null;
 	}
 
@@ -84,18 +88,21 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if((sideOne == sideTwo) && (sideTwo == sideThree)) {
+				return true; 
+			} else return false; //before it said return false; 
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if((sideOne == sideTwo) || (sideTwo == sideThree) || (sideOne == sideThree)) {
+				return true; 
+			} else return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if((sideOne != sideTwo) && (sideTwo != sideThree) && (sideOne != sideThree)) {
+				return true; 
+			} else 	return false;
 		}
 
 	}
@@ -106,18 +113,35 @@ public class EvaluationService {
 	 * --Letter Values-- Letter Value A, E, I, O, U, L, N, R, S, T = 1; D, G = 2; B,
 	 * C, M, P = 3; F, H, V, W, Y = 4; K = 5; J, X = 8; Q, Z = 10; Examples
 	 * "cabbage" should be scored as worth 14 points:
-	 * 
 	 * 3 points for C, 1 point for A, twice 3 points for B, twice 2 points for G, 1
 	 * point for E And to total:
-	 * 
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
 	 * 
 	 * @param string
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+		string.toLowerCase();
+		for (int i = 0; i < string.length(); ++i)  {
+			char c = string.charAt(i);
+			if ((c == 'q') || (c == 'z')) { 
+				score += 10; 
+			} else if (c == 'x') {
+				score += 8; 
+			} else if (c == 'k') {
+				score += 5; 
+			} else if ((c == 'b') || (c == 'c') || (c == 'm') || (c == 'p')) {
+				score += 3; 
+			} else if ((c == 'f') || (c == 'h') || (c == 'v') || (c == 'w') || (c == 'y')) {
+				score += 4; 
+			} else if ((c == 'd') || (c == 'g')) {
+				score +=2; 
+			} else {
+				score +=1; 
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -151,10 +175,29 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
+	
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		/create an array of chars with 10 slots to hold final number
+		char[] num = new char[10];
+		int i = 0;
+		int arrCount = 0;
+		char c = string.charAt(i); 
+		
+		while ((Character.isDigit(c) == false) || (c == '1')) {
+			++i; 
+			c = string.charAt(i);
+			
+		} 
+		for(int j = i; j < string.length(); ++j) {
+			c = string.charAt(j);
+			if (Character.isDigit(c)) {
+				num[arrCount] = c; 
+				++arrCount;					
+			} 
+		}
+		return new String(num); 
 	}
+	
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -165,6 +208,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
 		return null;
@@ -246,8 +290,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		StringBuilder phrase = new StringBuilder();
+		string.toLowerCase(); 
+		String[] set = string.split(" ");
+		for(int i = 0; i < set.length; i++) {
+			StringBuilder word = new StringBuilder(set[i]);
+			char c = word.charAt(0); 
+			if ((c == 'a') || (c == 'e') || (c == 'i') || (c == 'o') || (c == 'u')) {
+				word.append("ay"); 
+			} else {
+				word.append(c);
+				word.append("ay");
+				word.deleteCharAt(0);
+			}
+			phrase.append(word.toString() + " "); 
+			 
+		}
+			
+		return phrase.toString();
 	}
 
 	/**
@@ -266,7 +326,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
+		input.(char[]) collection.toArray(new char[collection.size()])
 		return false;
 	}
 
@@ -420,14 +480,14 @@ public class EvaluationService {
 	}
 
 	/**
-	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
+	 * 16. Determine if a sentence is a pangram. A pangram (Greek: pi-alpha-nu gamma-rho-alpha-mu-alpha, pan
 	 * gramma, "every letter") is a sentence using every letter of the alphabet at
 	 * least once. The best known English pangram is:
 	 * 
 	 * The quick brown fox jumps over the lazy dog.
 	 * 
 	 * The alphabet used consists of ASCII letters a to z, inclusive, and is case
-	 * insensitive. Input will not contain non-ASCII symbols.
+	 * insensitive. Input will not contain non-ASCII symbols. //How Ironic that the question prompt does
 	 * 
 	 * @param string
 	 * @return
@@ -447,6 +507,7 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
+		//Check if the object has seconds enabled; if not, make a new one 
 		return null;
 	}
 
